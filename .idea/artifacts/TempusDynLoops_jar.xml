@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TempusDynLoops:jar">
+    <output-path>$PROJECT_DIR$/../purpur 1.20.4/plugins</output-path>
+    <root id="archive" name="TempusDynLoops.jar">
+      <element id="module-output" name="TempusDynLoops" />
+    </root>
+  </artifact>
+</component>

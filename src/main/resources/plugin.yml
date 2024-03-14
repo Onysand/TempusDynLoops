@@ -1,0 +1,16 @@
+name: TempusDynLoops
+version: '${project.version}'
+main: org.onysand.mc.tempusdynloops.TempusDynLoops
+api-version: '1.20'
+depend: [dynmap]
+authors: [ Onysand ]
+commands:
+  tempusdynloops:
+    aliases:
+      - tdl
+      - tempusdl
+    permission: tdl.createmarkers
+
+permissions:
+  tdl.createmarkers:
+    description: creating markers permission
