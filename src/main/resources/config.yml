@@ -25,8 +25,12 @@ utils:
   worldName-lines: "world_nether"
 
 tags:
-  create-marker: "<createmarker>"
+  create-marker: "<marker>"
+  create-line: "<loop>"
+  create-corner: "<point>"
 
-  create-corner: "<createcorner>"
-
-  create-line: "<createline>"
+#ДОДЕЛАТЬ БД
+#ДОДЕЛАТЬ ИВЕНТЫ ЛОМАНИЯ ЗАЩИЩЁННЫХ ТАБЛИЧЕК (ТОЛЬКО ГЛАВНАЯ)
+#СДЕЛАТЬ ТАБЛИЧКИ НЕРЕДАКТИРУЕМЫМИ
+#АДМИНЫ МОГУТ ЛОМАТЬ ТАБЛИЧКИ ДРУГИХ ИГРОКОВ
+#

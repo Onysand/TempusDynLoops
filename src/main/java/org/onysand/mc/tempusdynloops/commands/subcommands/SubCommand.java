@@ -1,4 +1,4 @@
-package org.onysand.mc.tempusdynloops.commands;
+package org.onysand.mc.tempusdynloops.commands.subcommands;
 
 import org.bukkit.command.CommandSender;
 
@@ -9,5 +9,5 @@ public interface SubCommand {
 
     String getSyntax();
 
-    void perform (CommandSender sender, String args[]);
+    void perform (CommandSender sender, String[] args);
 }

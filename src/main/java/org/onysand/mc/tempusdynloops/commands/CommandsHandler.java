@@ -10,13 +10,15 @@ import org.jetbrains.annotations.Nullable;
 import org.onysand.mc.tempusdynloops.commands.subcommands.ClearCorners;
 import org.onysand.mc.tempusdynloops.commands.subcommands.ListCorners;
 import org.onysand.mc.tempusdynloops.commands.subcommands.ListMarkers;
+import org.onysand.mc.tempusdynloops.commands.subcommands.SubCommand;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommandsHandler implements TabExecutor {
     private final ArrayList<SubCommand> subCommands = new ArrayList<>();
-    public CommandsHandler () {
+
+    public CommandsHandler() {
         subCommands.add(new ListMarkers());
         subCommands.add(new ClearCorners());
         subCommands.add(new ListCorners());
@@ -27,7 +29,7 @@ public class CommandsHandler implements TabExecutor {
 
         if (args.length > 0) {
             for (SubCommand subcommand : subCommands) {
-                if(args[0].equalsIgnoreCase(subcommand.getName())) {
+                if (args[0].equalsIgnoreCase(subcommand.getName())) {
                     subcommand.perform(commandSender, args);
                     return true;
                 }
@@ -49,10 +51,7 @@ public class CommandsHandler implements TabExecutor {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         if (args.length <= 1)
-            return subCommands.stream()
-                    .map(SubCommand::getName)
-                    .filter(name -> name.startsWith(args[0]))
-                    .toList();
+            return subCommands.stream().map(SubCommand::getName).filter(name -> name.startsWith(args[0])).toList();
 
         return new ArrayList<>();
     }

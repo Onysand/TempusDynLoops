@@ -5,7 +5,7 @@ import org.onysand.mc.tempusdynloops.TempusDynLoops;
 
 public class PluginConfig {
     private final TempusDynLoops plugin;
-    private FileConfiguration config;
+    private final FileConfiguration config;
     private String markersWorldName;
     private String markerWorldMessage;
     private String linesWorldName;
@@ -30,33 +30,43 @@ public class PluginConfig {
     public String getMarkersWorldName() {
         return markersWorldName;
     }
+
     public String getMarkerWorldMessage() {
         return markerWorldMessage;
     }
+
     public String getCreatingLineEmptyLinesMessage() {
         return creatingLineEmptyLinesMessage;
     }
+
     public String getCreatedMarker() {
         return createdMarker;
     }
+
     public String getLinesWorldName() {
         return linesWorldName;
     }
+
     public String getLinesWorldMessage() {
         return linesWorldMessage;
     }
+
     public String getAtLeastTwoCorners() {
         return atLeastTwoCorners;
     }
+
     public String getOnlyOwnerMessage() {
         return onlyOwnerMessage;
     }
+
     public String getMarkerTag() {
         return markerTag;
     }
+
     public String getCornerTag() {
         return cornerTag;
     }
+
     public String getLineTag() {
         return lineTag;
     }

@@ -2,8 +2,6 @@ package org.onysand.mc.tempusdynloops.commands.subcommands;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.onysand.mc.tempusdynloops.commands.SubCommand;
-import org.onysand.mc.tempusdynloops.utils.MarkerUtils;
 
 public class ClearCorners implements SubCommand {
     @Override
@@ -24,7 +22,7 @@ public class ClearCorners implements SubCommand {
     @Override
     public void perform(CommandSender sender, String[] args) {
         if (sender instanceof Player player) {
-            MarkerUtils.clearCorners(player);
+            //MarkerUtils.clearCorners(player);
 
             player.sendMessage("Маркеры ветки удалены");
         }
