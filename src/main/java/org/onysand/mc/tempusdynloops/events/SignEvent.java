@@ -41,9 +41,6 @@ public class SignEvent implements Listener {
         this.loopComponent = new LoopComponent(plugin);
     }
 
-
-    //СДЕЛАТЬ ТАБЛИЧКИ НЕРЕДАКТИРУЕМЫМИ
-
     @EventHandler
     public void onLoopInit(SignChangeEvent event) {
         asyncScheduler.runNow(plugin, task -> {
@@ -85,6 +82,7 @@ public class SignEvent implements Listener {
             String playerName = player.getName();
             loopComponent.setLoopName(playerName, markerName);
             loopComponent.addProcessingSign(player, signLocation, true);
+            waxSign(event.getBlock().getLocation());
         });
     }
 
@@ -113,12 +111,12 @@ public class SignEvent implements Listener {
             if (!hasTag) return;
             Location signLocation = event.getBlock().getLocation();
             loopComponent.addProcessingSign(player, signLocation, false);
+            waxSign(signLocation);
         });
     }
 
     @EventHandler
     public void onMarkerSetup(SignChangeEvent event) {
-        //ДОБАВИТЬ ПРОВЕРКУ НА МИР, ЕСЛИ ЭТО ВООБЩЕ НУЖНО
         asyncScheduler.runNow(plugin, task -> {
             Player player = event.getPlayer();
             if (!player.hasPermission("tdl.createmarkers")) return;
@@ -127,13 +125,15 @@ public class SignEvent implements Listener {
 
             boolean hasTag = false;
             String markerName = null;
+            String stringURL = null;
 
             for (int i = 0; i < signLines.size(); i++) {
                 String lineText = ((TextComponent) signLines.get(i)).content();
                 if (lineText.equals(markerTag)) {
                     hasTag = true;
-                    if (i < signLines.size() - 1) {
+                    if (i < signLines.size() - 2) {
                         markerName = ((TextComponent) signLines.get(i + 1)).content();
+                        stringURL = ((TextComponent) signLines.get(i + 2)).content();
                         break;
                     } else {
                         player.sendMessage("Тег указан на последней строке, имя маркера не может быть прочитано.");
@@ -153,8 +153,8 @@ public class SignEvent implements Listener {
             }
 
             Location signLocation = event.getBlock().getLocation();
-            markerComponent.create(signLocation, player, markerName);
-            player.sendMessage(config.getMarkerWorldMessage());
+            markerComponent.create(signLocation, player, markerName, stringURL);
+            waxSign(signLocation);
         });
     }
 
@@ -190,6 +190,14 @@ public class SignEvent implements Listener {
                 });
 
             });
+        });
+    }
+
+    private void waxSign(Location loc) {
+        syncShceduler.runTask(plugin, waxTask -> {
+            Sign sign = (Sign) loc.getBlock().getState();
+            sign.setWaxed(true);
+            sign.update();
         });
     }
 }

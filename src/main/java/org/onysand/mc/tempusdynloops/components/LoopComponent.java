@@ -4,6 +4,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.dynmap.DynmapAPI;
+import org.dynmap.markers.Marker;
 import org.dynmap.markers.MarkerAPI;
 import org.dynmap.markers.PolyLineMarker;
 import org.onysand.mc.tempusdynloops.TempusDynLoops;
@@ -49,7 +50,7 @@ public class LoopComponent {
             return;
         }
 
-        int markerId = database.getMarkerId();
+        int markerId = database.getNextID();
         String linesLabel = loopNames.getOrDefault(playerName, "null");
         UUID playerUUID = player.getUniqueId();
         String setName = playerName + "_markers";
@@ -67,7 +68,7 @@ public class LoopComponent {
         linesMarker.setLineStyle(4, 1, rgbColor);
 
         String startLoc = LocUtils.stringLoc(getStartLocation(playerName));
-        database.addSignMarker(startLoc, markerId, playerUUID);
+        database.addSignMarker(startLoc, playerUUID, true);
         processingSigns.remove(playerName);
         player.sendMessage("Марер лупы успешно создан и бла бла бла.");
 
@@ -135,6 +136,14 @@ public class LoopComponent {
             locationArray[i] = locationList.get(i);
         }
         return locationArray;
+    }
+
+    public void remove(int markerID, String playerName) {
+        PolyLineMarker marker = markerAPI.getMarkerSet(playerName + "_markers").findPolyLineMarker(String.valueOf(markerID));
+        if (marker == null) {
+            return;
+        }
+        marker.deleteMarker();
     }
 
     private PolyLineMarker createMarker(String playerName, int markerId, String setName, String linesLabel) {

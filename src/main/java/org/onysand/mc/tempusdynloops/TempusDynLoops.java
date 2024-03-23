@@ -7,6 +7,7 @@ import org.dynmap.DynmapAPI;
 import org.onysand.mc.tempusdynloops.commands.CommandsHandler;
 import org.onysand.mc.tempusdynloops.events.SignBreakEvent;
 import org.onysand.mc.tempusdynloops.events.SignEvent;
+import org.onysand.mc.tempusdynloops.events.SignExplode;
 import org.onysand.mc.tempusdynloops.utils.Database;
 import org.onysand.mc.tempusdynloops.utils.PluginConfig;
 
@@ -44,16 +45,19 @@ public final class TempusDynLoops extends JavaPlugin {
     public DynmapAPI getDynmapAPI() {
         return dynmapAPI;
     }
+
     public PluginConfig getPluginConfig() {
         return pluginConfig;
     }
+
     private void registerEvents() {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new SignEvent(plugin), this);
         pm.registerEvents(new SignBreakEvent(plugin), this);
+        pm.registerEvents(new SignExplode(plugin), this);
     }
 
     private void registerCommands() {
-        getCommand("tempusdynloops").setExecutor(new CommandsHandler());
+        getCommand("tempusdynloops").setExecutor(new CommandsHandler(plugin));
     }
 }

@@ -7,21 +7,26 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.onysand.mc.tempusdynloops.commands.subcommands.ClearCorners;
-import org.onysand.mc.tempusdynloops.commands.subcommands.ListCorners;
+import org.onysand.mc.tempusdynloops.TempusDynLoops;
+import org.onysand.mc.tempusdynloops.commands.subcommands.DeleteMarker;
 import org.onysand.mc.tempusdynloops.commands.subcommands.ListMarkers;
 import org.onysand.mc.tempusdynloops.commands.subcommands.SubCommand;
+import org.onysand.mc.tempusdynloops.commands.subcommands.TeleportMarker;
+import org.onysand.mc.tempusdynloops.utils.Database;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommandsHandler implements TabExecutor {
     private final ArrayList<SubCommand> subCommands = new ArrayList<>();
+    private  final Database database;
 
-    public CommandsHandler() {
-        subCommands.add(new ListMarkers());
-        subCommands.add(new ClearCorners());
-        subCommands.add(new ListCorners());
+    public CommandsHandler(TempusDynLoops plugin) {
+        this.database = plugin.getDatabase();
+
+        subCommands.add(new ListMarkers(plugin));
+        subCommands.add(new TeleportMarker(plugin));
+        subCommands.add(new DeleteMarker(plugin));
     }
 
     @Override
@@ -50,8 +55,18 @@ public class CommandsHandler implements TabExecutor {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        if (args.length <= 1)
+        if (args.length <= 1) {
             return subCommands.stream().map(SubCommand::getName).filter(name -> name.startsWith(args[0])).toList();
+        }
+
+        if (args[0].equals("deletemarker")) {
+            if (database.getMarkerIDbyOwner(args[1]) == null) return new ArrayList<>();
+            if (args.length == 2) {
+                return database.getSignOwners(args[1]).stream().filter(it -> it.startsWith(args[1])).toList();
+            }
+
+            return database.getMarkerIDsByOwner(args[1]);
+        }
 
         return new ArrayList<>();
     }

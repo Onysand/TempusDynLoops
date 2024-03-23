@@ -14,3 +14,9 @@ commands:
 permissions:
   tdl.createmarkers:
     description: creating markers permission
+  tdl.deletemarker:
+    description: delete marker command
+  tdl.listmarker:
+    description: list markers command
+  tdl.tpmarker:
+    description: tp to marker command
